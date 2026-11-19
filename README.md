@@ -7,7 +7,7 @@ Fichas de treino (Claus e Ana) para abrir no celular durante o treino. Páginas 
 - Pasta local: `D:\laragon\www\claus_fichas-treino`
 
 ## 1. Estrutura
-- `index.html`: lista com as duas fichas
+- `index.html`: tela inicial com um cartão por pessoa, mostrando o próximo treino da fila (lê `ficha.proximo` / `ana.proximo` do `localStorage`). Os nomes dos treinos ficam repetidos no objeto `FICHAS` dela: **ao renomear um treino numa ficha, atualizar aqui também**
 - `claus.html`, `ana.html`: uma ficha cada (HTML, CSS e JS num arquivo só)
 
 ## 2. Como a ficha funciona

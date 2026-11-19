@@ -15,6 +15,7 @@ Fichas de treino (Claus e Ana) para abrir no celular durante o treino. Páginas 
 - Bi-set/tri-set: exercícios com o mesmo prefixo em `bi` ("Dupla 1", "Trio 2"…) aparecem agrupados.
 - Tocar no número da série marca/desmarca. "Concluir treino" limpa as marcações e avança a fila (A→B→C→D→A).
 - Marcações e próximo treino ficam no `localStorage` do navegador (chaves `ficha.*` no Claus, `ana.*` na Ana). Ficam só naquele celular/navegador.
+- Campo "Carga (kg)" em cada exercício: salva sozinho ao digitar (borda verde rápida confirma), no `localStorage` (`ficha.cargas` / `ana.cargas`), pelo **nome do exercício**. Não é apagado por "Limpar" nem "Concluir". Renomear um exercício perde a carga salva dele.
 - "Ver no YouTube": abre uma busca no YouTube pelo exercício (`YQ` ajusta o termo de busca). Se o navegador bloquear nova aba, abre na mesma.
 - Os treinos ficam no objeto `T` dentro do `<script>` de cada ficha. Para mudar a ficha, editar ali.
 

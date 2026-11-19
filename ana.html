@@ -70,6 +70,12 @@ h1{font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:.5px
 .yt{display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-size:12.5px;font-weight:600;color:#fff;background:#E62117;border-radius:8px;padding:5px 10px;text-decoration:none}
 .yt svg{width:14px;height:14px}
 .note{font-size:12.5px;color:var(--muted);margin-top:6px}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;flex-wrap:wrap}
+.foot .yt{margin-top:0}
+.carga{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.carga input{width:76px;font:600 16px var(--body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:5px 8px;text-align:center}
+.carga input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.carga input.salvo{border-color:var(--done)}
 .grp{border:2px solid var(--accent);border-radius:16px;padding:8px;background:color-mix(in srgb,var(--accent) 7%,var(--bg));display:flex;flex-direction:column}
 .grp-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:2px 6px 8px}
 .grp-t{font-family:var(--display);font-weight:800;font-size:19px;text-transform:uppercase;letter-spacing:.5px;color:var(--accent);line-height:1}
@@ -192,6 +198,7 @@ const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v)
 let proximo=store.get("ana.proximo","A");
 let atual=proximo;
 let marcas=store.get("ana.marcas",{});
+let cargas=store.get("ana.cargas",{});
 const YQ={
   "Crossover / crucifixo no cabo":"crossover na polia",
   "Glúteo no cabo (coice)":"coice glúteo no cabo",
@@ -233,7 +240,10 @@ function renderDay(){
         <div class="chips">${e.g.map(k=>chip(k)).join("")}${(e.s||[]).map(k=>chip(k,true)).join("")}</div>
         <div class="meta"><div class="reps">${e.sets} × ${e.r.replace(/s$/,"")}<small>${/s$/.test(e.r)?"seg":"reps"}</small></div><div class="sets">${sets}</div></div>
         ${e.o?`<div class="note">${esc(e.o)}</div>`:""}
-        <a class="yt" href="${yt(e.n)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Ver no YouTube</a>
+        <div class="foot">
+          <label class="carga">Carga <input type="text" inputmode="decimal" maxlength="12" placeholder="—" data-carga="${esc(e.n)}" value="${esc(cargas[e.n]||"")}"> kg</label>
+          <a class="yt" href="${yt(e.n)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Ver no YouTube</a>
+        </div>
       </div></article>`;
   });
   const LINK=`<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2v12M2 11l3 3 3-3M11 14V2M8 5l3-3 3 3"/></svg>`;
@@ -259,6 +269,13 @@ function renderDay(){
     <div class="toast" id="toast"></div>`;
 }
 function render(){renderTabs();renderDay()}
+let salvoTimer;
+document.addEventListener("input",ev=>{
+  const inp=ev.target.closest("[data-carga]");if(!inp)return;
+  const v=inp.value.trim();if(v)cargas[inp.dataset.carga]=v;else delete cargas[inp.dataset.carga];
+  store.set("ana.cargas",cargas);
+  inp.classList.add("salvo");clearTimeout(salvoTimer);salvoTimer=setTimeout(()=>inp.classList.remove("salvo"),900);
+});
 document.addEventListener("click",ev=>{
   const ytLink=ev.target.closest(".yt");
   if(ytLink){ev.preventDefault();if(!window.open(ytLink.href,"_blank"))location.href=ytLink.href;return}

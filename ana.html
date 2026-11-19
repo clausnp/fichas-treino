@@ -15,7 +15,7 @@
   --bg:#EEF1F4; --surface:#FFFFFF; --fg:#14181D; --muted:#5E6873; --line:#D8DEE5;
   --accent:#0E6E8C; --accent-fg:#FFFFFF; --done:#1F9D5B;
   --g-peito:#D9433B; --g-costas:#2F55E0; --g-ombro:#C77A12; --g-biceps:#8A3FD1; --g-triceps:#B0379A;
-  --g-quad:#138A8A; --g-post:#4E7A1E; --g-gluteo:#C2410C; --g-pant:#596579; --g-abd:#7C5A2E;
+  --g-quad:#138A8A; --g-post:#4E7A1E; --g-gluteo:#C2410C; --g-pant:#596579; --g-abd:#7C5A2E; --g-adut:#9D3F6B;
   --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
   --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
@@ -23,13 +23,13 @@
   --bg:#0E1216; --surface:#171C22; --fg:#E8ECF0; --muted:#97A2AE; --line:#29313A;
   --accent:#5CC4E6; --accent-fg:#0E1216; --done:#3CC37E;
   --g-peito:#FF7A70; --g-costas:#7D98FF; --g-ombro:#F0A53A; --g-biceps:#B98AF0; --g-triceps:#E57BCB;
-  --g-quad:#3CC6C6; --g-post:#93C45A; --g-gluteo:#FF8B52; --g-pant:#A3AFC0; --g-abd:#CFA26A;
+  --g-quad:#3CC6C6; --g-post:#93C45A; --g-gluteo:#FF8B52; --g-pant:#A3AFC0; --g-abd:#CFA26A; --g-adut:#E585B2;
   color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0E1216; --surface:#171C22; --fg:#E8ECF0; --muted:#97A2AE; --line:#29313A;
   --accent:#5CC4E6; --accent-fg:#0E1216; --done:#3CC37E;
   --g-peito:#FF7A70; --g-costas:#7D98FF; --g-ombro:#F0A53A; --g-biceps:#B98AF0; --g-triceps:#E57BCB;
-  --g-quad:#3CC6C6; --g-post:#93C45A; --g-gluteo:#FF8B52; --g-pant:#A3AFC0; --g-abd:#CFA26A;
+  --g-quad:#3CC6C6; --g-post:#93C45A; --g-gluteo:#FF8B52; --g-pant:#A3AFC0; --g-abd:#CFA26A; --g-adut:#E585B2;
   color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.45;
@@ -95,6 +95,7 @@ details ul{margin:0 0 14px;padding-left:18px;display:flex;flex-direction:column;
   <header>
     <h1>Treino da Ana</h1>
     <div class="sub">Superior / Inferior em rodízio · faça sempre o próximo da fila</div>
+    <div class="sub">Última série perto do limite (sobrando 1-2 reps). Fez o máximo de reps em todas as séries? Suba a carga.</div>
     <div class="next" id="next"></div>
   </header>
   <nav class="tabs" role="tablist" id="tabs"></nav>
@@ -116,7 +117,7 @@ details ul{margin:0 0 14px;padding-left:18px;display:flex;flex-direction:column;
 const G={
   peito:["Peito","--g-peito"],costas:["Costas","--g-costas"],ombro:["Ombro","--g-ombro"],
   biceps:["Bíceps","--g-biceps"],triceps:["Tríceps","--g-triceps"],quad:["Quadríceps","--g-quad"],
-  post:["Posterior","--g-post"],gluteo:["Glúteo","--g-gluteo"],pant:["Panturrilha","--g-pant"],abd:["Abdômen","--g-abd"]
+  post:["Posterior","--g-post"],gluteo:["Glúteo","--g-gluteo"],pant:["Panturrilha","--g-pant"],abd:["Abdômen","--g-abd"],adut:["Adutores","--g-adut"]
 };
 const S='fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"';
 const F='fill="currentColor" stroke="none"';
@@ -151,11 +152,11 @@ const I={
 };
 const T={
   A:{nome:"Inferior · glúteo e quadríceps",min:"35-40",ex:[
-    {n:"Agachamento Smith",i:"agacha",g:["quad"],s:["gluteo"],sets:3,r:"8-10",o:"Desça até a coxa ficar paralela. Descanso de 90s"},
-    {n:"Elevação pélvica",i:"pelvica",g:["gluteo"],s:["post"],sets:3,r:"8-10",o:"Barra ou máquina. Aperte o glúteo 1s lá em cima. Descanso de 90s"},
-    {n:"Leg press 45°",i:"legpress",g:["quad"],s:["gluteo"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com a abdutora"},
-    {n:"Cadeira abdutora",i:"abdutora",g:["gluteo"],sets:3,r:"12-15",bi:"Dupla 1 · alterne com o leg press",o:"Tronco inclinado para frente pega mais glúteo"},
-    {n:"Cadeira extensora",i:"extensora",g:["quad"],sets:3,r:"10-12",bi:"Dupla 2 · alterne com o abdominal"},
+    {n:"Agachamento Smith profundo",i:"agacha",g:["quad"],s:["gluteo"],sets:3,r:"8-10",o:"Pés um pouco à frente e afastados. Desça abaixo da linha do joelho: agachamento fundo cresce mais glúteo. Descanso de 90s"},
+    {n:"Elevação pélvica",i:"pelvica",g:["gluteo"],s:["post"],sets:4,r:"8-12",o:"Barra ou máquina. Queixo para baixo, segure 1s lá em cima. Descanso de 90s"},
+    {n:"Leg press 45° pés altos",i:"legpress",g:["gluteo"],s:["quad","post"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com a abdutora",o:"Pés no alto da plataforma e afastados, desça o máximo sem tirar o quadril do banco"},
+    {n:"Cadeira abdutora",i:"abdutora",g:["gluteo"],sets:3,r:"15-20",bi:"Dupla 1 · alterne com o leg press",o:"Tronco inclinado para frente pega mais glúteo"},
+    {n:"Cadeira extensora",i:"extensora",g:["quad"],sets:3,r:"12-15",bi:"Dupla 2 · alterne com o abdominal"},
     {n:"Abdominal infra",i:"infra",g:["abd"],sets:3,r:"12-15",bi:"Dupla 2 · alterne com a extensora"}
   ]},
   B:{nome:"Superior · costas e ombro",min:"35-40",ex:[
@@ -163,17 +164,17 @@ const T={
     {n:"Supino inclinado halter",i:"supino",g:["peito"],s:["ombro","triceps"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com a puxada",o:"Banco a 30°"},
     {n:"Remada baixa triângulo",i:"remadabaixa",g:["costas"],s:["biceps"],sets:3,r:"10-12",bi:"Dupla 2 · alterne com o desenvolvimento"},
     {n:"Desenvolvimento halter",i:"desenv",g:["ombro"],s:["triceps"],sets:3,r:"10-12",bi:"Dupla 2 · alterne com a remada"},
-    {n:"Elevação lateral",i:"lateral",g:["ombro"],sets:3,r:"12-15",bi:"Trio · 1 de 3",o:"Sem balançar o corpo"},
-    {n:"Rosca alternada",i:"martelo",g:["biceps"],sets:3,r:"10-12",bi:"Trio · 2 de 3"},
+    {n:"Elevação lateral",i:"lateral",g:["ombro"],sets:3,r:"12-15",bi:"Trio · 1 de 3",o:"Halter ou cabo, sem balançar o corpo"},
+    {n:"Rosca inclinada halter",i:"rosca",g:["biceps"],sets:3,r:"10-12",bi:"Trio · 2 de 3"},
     {n:"Tríceps corda",i:"tricorda",g:["triceps"],sets:3,r:"10-12",bi:"Trio · 3 de 3"}
   ]},
   C:{nome:"Inferior · glúteo e posterior",min:"35-40",ex:[
-    {n:"Stiff",i:"stiff",g:["post"],s:["gluteo"],sets:3,r:"8-10",o:"Coluna reta, barra rente à perna. Descanso de 90s"},
-    {n:"Afundo no Smith",i:"afundo",g:["gluteo"],s:["quad"],sets:3,r:"10",o:"Cada perna. Passo longo pega mais glúteo"},
-    {n:"Mesa flexora",i:"flexora",g:["post"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com o coice"},
-    {n:"Glúteo no cabo (coice)",i:"coice",g:["gluteo"],sets:3,r:"12-15",bi:"Dupla 1 · alterne com a flexora",o:"Cada perna"},
-    {n:"Cadeira abdutora",i:"abdutora",g:["gluteo"],sets:3,r:"12-15",bi:"Dupla 2 · alterne com a panturrilha"},
-    {n:"Panturrilha em pé",i:"pant",g:["pant"],sets:3,r:"12-15",bi:"Dupla 2 · alterne com a abdutora",o:"Segure 1s lá em cima"}
+    {n:"Stiff",i:"stiff",g:["post"],s:["gluteo"],sets:3,r:"8-10",o:"Joelho levemente dobrado, quadril para trás até sentir alongar atrás da coxa, coluna reta. Descanso de 90s"},
+    {n:"Agachamento búlgaro",i:"afundo",g:["gluteo"],s:["quad"],sets:3,r:"8-10",o:"Pé de trás no banco, tronco levemente inclinado para frente (pega mais glúteo). Cada perna, halteres ou Smith"},
+    {n:"Cadeira flexora sentada",i:"flexora",g:["post"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com o coice",o:"Sentada cresce mais o posterior que deitada (músculo trabalha alongado)"},
+    {n:"Glúteo no cabo (coice)",i:"coice",g:["gluteo"],sets:3,r:"12-15",bi:"Dupla 1 · alterne com a flexora",o:"Cada perna, sem arquear a lombar"},
+    {n:"Cadeira adutora",i:"abdutora",g:["adut"],sets:3,r:"12-15",bi:"Dupla 2 · alterne com a panturrilha",o:"Parte interna da coxa. Abra bem na volta, devagar"},
+    {n:"Panturrilha em pé",i:"pant",g:["pant"],sets:3,r:"12-15",bi:"Dupla 2 · alterne com a adutora",o:"Desça bem e segure 1s lá em cima"}
   ]},
   D:{nome:"Superior · costas e abdômen",min:"35-40",ex:[
     {n:"Puxada triângulo",i:"puxada",g:["costas"],s:["biceps"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com o supino"},
@@ -203,6 +204,11 @@ const YQ={
   "Flexor deitado":"mesa flexora deitado",
   "Abdominal remador":"abdominal remador",
   "Elevação pélvica":"elevação pélvica barra",
+  "Agachamento Smith profundo":"agachamento smith profundo glúteo",
+  "Leg press 45° pés altos":"leg press pés altos glúteo",
+  "Agachamento búlgaro":"agachamento búlgaro glúteo",
+  "Cadeira flexora sentada":"cadeira flexora sentada",
+  "Rosca inclinada halter":"rosca inclinada halter banco",
   "Rosca direta W":"rosca direta barra W"
 };
 const yt=n=>"https://www.youtube.com/results?search_query="+encodeURIComponent((YQ[n]||n)+" como fazer execução correta shorts");

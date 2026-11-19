@@ -45,6 +45,12 @@ Não há `.env`.
 ## 10. Decisões
 - GitHub Pages pessoal em vez de servidor da Voope: projeto pessoal, fora da empresa.
 - Um arquivo por pessoa, autocontido, para ser fácil de copiar e editar.
+- Ficha da Ana (foco glúteo), revisada em 19/11/2026 com base em estudos:
+  - Glúteo 2×/semana com variações diferentes em cada dia (nada repetido igual): agachamento fundo e leg press pés altos (glúteo alongado), elevação pélvica (glúteo contraído), búlgaro e stiff (alongado), abdutora e coice (glúteo médio/acessório).
+  - Agachamento fundo cresce mais glúteo e adutores que o raso (Kubo 2019); elevação pélvica e agachamento crescem glúteo parecido (Plotkin 2023), por isso entram os dois.
+  - Flexora sentada no lugar da deitada: mais crescimento do posterior (Maeo 2021, músculo trabalhando alongado).
+  - Cadeira adutora no C em vez de repetir a abdutora do A.
+  - Rosca inclinada (bíceps alongado) no lugar da alternada; regra de progressão no topo da ficha (1-2 reps sobrando, bateu o topo das reps → sobe carga).
 
 ## 11. Como trabalhar
 1. Editar `claus.html`/`ana.html` (objeto `T` para os treinos).
@@ -53,4 +59,5 @@ Não há `.env`.
 4. No celular: abrir o link no Chrome/Safari e usar "Adicionar à tela inicial".
 
 ## Histórico de ajustes nas fichas
+- 19/11/2026, Ana: pernas (A e C) refeitas — veja "Decisões".
 - 19/11/2026, Claus: supino reto e supino inclinado (A e C) na máquina; agachamento na máquina (B); serrote virou remada unilateral na máquina (C); afundo saiu e entrou elevação pélvica (D).

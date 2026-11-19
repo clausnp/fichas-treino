@@ -51,3 +51,6 @@ Não há `.env`.
 2. Testar no navegador do PC.
 3. Commit e push na `main`; esperar o Pages publicar.
 4. No celular: abrir o link no Chrome/Safari e usar "Adicionar à tela inicial".
+
+## Histórico de ajustes nas fichas
+- 19/11/2026, Claus: supino reto e supino inclinado (A e C) na máquina; agachamento na máquina (B); serrote virou remada unilateral na máquina (C); afundo saiu e entrou elevação pélvica (D).

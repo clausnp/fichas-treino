@@ -139,7 +139,7 @@ const I={
   extensora:`<circle cx="13" cy="9" r="3"/><path d="M12 13v17h14l15-3M10 14l2 16"/><circle cx="41" cy="30" r="2.5"/><path d="M12 30v12M26 30v12"/>`,
   flexora:`<path d="M5 32h32M9 32v10M33 32v10"/><circle cx="7" cy="26" r="3"/><path d="M10 27h20l6-12"/><circle cx="37" cy="13" r="2.5"/>`,
   stiff:`<circle cx="9" cy="20" r="3"/><path d="M12 21l15 5v18M14 22l1 12M25 26l3 18"/><circle cx="15" cy="36" r="3.5"/>`,
-  afundo:`<circle cx="24" cy="7" r="3"/><path d="M24 10v16M24 26l8 6v10h4M24 26l-7 13H9M24 14l-4 8M24 14l4 8"/>`,
+  pelvica:`<path d="M4 26h10M8 26v14M20 40h24"/><circle cx="9" cy="21" r="3"/><path d="M12 24l16-3 8 3v16"/><circle cx="28" cy="16" r="3.5"/>`,
   abdutora:`<circle cx="24" cy="7" r="3"/><path d="M24 10v16M16 28h16M24 26l-11 14M24 26l11 14M6 34l-3 3 3 3M42 34l3 3-3 3"/>`,
   pant:`<circle cx="22" cy="6" r="3"/><path d="M22 9v15M22 24l-1 10M22 24l2 10M20 34h6M22 13l-5 8M22 13l5 8M14 36h18v6H14zM38 22V10M34 14l4-4 4 4"/>`,
   abd:`<path d="M4 42h40"/><circle cx="13" cy="28" r="3"/><path d="M16 31l10 9 6-10 8 10M17 27l6 4"/>`,
@@ -147,16 +147,16 @@ const I={
 };
 const T={
   A:{nome:"Superior · pesado",min:"35-40",ex:[
-    {n:"Supino reto barra",i:"supino",g:["peito"],s:["triceps","ombro"],sets:3,r:"6-8",bi:"Dupla 1 · alterne com a puxada"},
+    {n:"Supino reto máquina",i:"supino",g:["peito"],s:["triceps","ombro"],sets:3,r:"6-8",bi:"Dupla 1 · alterne com a puxada"},
     {n:"Puxada frontal aberta pronada",i:"puxada",g:["costas"],s:["biceps"],sets:3,r:"8-10",bi:"Dupla 1 · alterne com o supino"},
-    {n:"Supino inclinado halter",i:"supino",g:["peito"],s:["ombro"],sets:3,r:"8-10",bi:"Dupla 2 · alterne com a remada",o:"Banco a 30°"},
+    {n:"Supino inclinado máquina",i:"supino",g:["peito"],s:["ombro"],sets:3,r:"8-10",bi:"Dupla 2 · alterne com a remada"},
     {n:"Remada curvada pronada",i:"remada",g:["costas"],s:["post"],sets:3,r:"8-10",bi:"Dupla 2 · alterne com o inclinado"},
     {n:"Elevação lateral",i:"lateral",g:["ombro"],sets:3,r:"10-12",bi:"Trio · 1 de 3",o:"Sem balançar o corpo"},
     {n:"Rosca direta W",i:"rosca",g:["biceps"],sets:3,r:"10-12",bi:"Trio · 2 de 3"},
     {n:"Tríceps corda",i:"tricorda",g:["triceps"],sets:3,r:"10-12",bi:"Trio · 3 de 3"}
   ]},
   B:{nome:"Inferior · quadríceps",min:"30-35",ex:[
-    {n:"Agachamento Smith",i:"agacha",g:["quad"],s:["gluteo"],sets:3,r:"6-8",o:"Descanso de 90s entre séries"},
+    {n:"Agachamento na máquina",i:"agacha",g:["quad"],s:["gluteo"],sets:3,r:"6-8",o:"Descanso de 90s entre séries"},
     {n:"Leg press 45°",i:"legpress",g:["quad"],s:["gluteo"],sets:3,r:"10-12",o:"Descanso de 90s entre séries"},
     {n:"Cadeira extensora",i:"extensora",g:["quad"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com a flexora"},
     {n:"Mesa flexora",i:"flexora",g:["post"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com a extensora"},
@@ -165,16 +165,16 @@ const T={
   ]},
   C:{nome:"Superior · volume",min:"35-40",ex:[
     {n:"Puxada triângulo",i:"puxada",g:["costas"],s:["biceps"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com o supino"},
-    {n:"Supino inclinado Smith",i:"supino",g:["peito"],s:["ombro"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com a puxada"},
-    {n:"Serrote",i:"serrote",g:["costas"],sets:3,r:"10-12",bi:"Dupla 2 · alterne com o crossover",o:"Cada lado, alongando bem na descida"},
-    {n:"Crossover / crucifixo no cabo",i:"cross",g:["peito"],sets:3,r:"10-12",bi:"Dupla 2 · alterne com o serrote"},
+    {n:"Supino inclinado máquina",i:"supino",g:["peito"],s:["ombro"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com a puxada"},
+    {n:"Remada unilateral na máquina",i:"serrote",g:["costas"],sets:3,r:"10-12",bi:"Dupla 2 · alterne com o crossover",o:"Cada lado, alongando bem na volta"},
+    {n:"Crossover / crucifixo no cabo",i:"cross",g:["peito"],sets:3,r:"10-12",bi:"Dupla 2 · alterne com a remada"},
     {n:"Crucifixo inverso",i:"inverso",g:["ombro"],s:["costas"],sets:3,r:"10-12",bi:"Trio · 1 de 3",o:"Máquina ou banco inclinado"},
     {n:"Rosca martelo",i:"martelo",g:["biceps"],sets:3,r:"10-12",bi:"Trio · 2 de 3"},
     {n:"Tríceps francês na corda",i:"frances",g:["triceps"],sets:3,r:"10-12",bi:"Trio · 3 de 3"}
   ]},
   D:{nome:"Inferior · posterior",min:"30-35",ex:[
     {n:"Stiff",i:"stiff",g:["post"],s:["gluteo"],sets:3,r:"8-10",o:"Coluna reta, barra rente à perna. Descanso de 90s"},
-    {n:"Afundo no Smith",i:"afundo",g:["gluteo"],s:["quad"],sets:3,r:"10",o:"Cada perna, sem descanso entre as pernas"},
+    {n:"Elevação pélvica",i:"pelvica",g:["gluteo"],s:["post"],sets:3,r:"8-10",o:"Barra ou máquina. Aperte o glúteo 1s lá em cima. Descanso de 90s"},
     {n:"Flexor deitado",i:"flexora",g:["post"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com a abdutora"},
     {n:"Cadeira abdutora",i:"abdutora",g:["gluteo"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com o flexor"},
     {n:"Panturrilha sentada",i:"pant",g:["pant"],sets:3,r:"10-12",bi:"Dupla 2 · alterne com o abdominal"},
@@ -193,7 +193,7 @@ const YQ={
   "Puxada frontal aberta pronada":"puxada frontal aberta",
   "Puxada triângulo":"puxada triângulo pulley",
   "Remada curvada pronada":"remada curvada pronada barra",
-  "Serrote":"remada serrote halter",
+  "Remada unilateral na máquina":"remada unilateral máquina articulada",
   "Crucifixo inverso":"crucifixo inverso",
   "Tríceps francês na corda":"tríceps francês na polia corda",
   "Flexor deitado":"mesa flexora deitado",

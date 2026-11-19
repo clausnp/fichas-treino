@@ -101,6 +101,7 @@ details ul{margin:0 0 14px;padding-left:18px;display:flex;flex-direction:column;
   <header>
     <h1>Treino do Claus</h1>
     <div class="sub">Superior / Inferior em rodízio · faça sempre o próximo da fila</div>
+    <div class="sub">Última série perto do limite (sobrando 1-2 reps). Fez o máximo de reps em todas as séries? Suba a carga.</div>
     <div class="next" id="next"></div>
   </header>
   <nav class="tabs" role="tablist" id="tabs"></nav>
@@ -174,16 +175,16 @@ const T={
     {n:"Supino inclinado máquina",i:"supino",g:["peito"],s:["ombro"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com a puxada"},
     {n:"Remada unilateral na máquina",i:"serrote",g:["costas"],sets:3,r:"10-12",bi:"Dupla 2 · alterne com o crossover",o:"Cada lado, alongando bem na volta"},
     {n:"Crossover / crucifixo no cabo",i:"cross",g:["peito"],sets:3,r:"10-12",bi:"Dupla 2 · alterne com a remada"},
-    {n:"Crucifixo inverso",i:"inverso",g:["ombro"],s:["costas"],sets:3,r:"10-12",bi:"Trio · 1 de 3",o:"Máquina ou banco inclinado"},
+    {n:"Elevação lateral no cabo",i:"lateral",g:["ombro"],sets:3,r:"12-15",bi:"Trio · 1 de 3",o:"Cada lado, polia baixa. Cabo puxa mais embaixo, onde o halter fica leve"},
     {n:"Rosca martelo",i:"martelo",g:["biceps"],sets:3,r:"10-12",bi:"Trio · 2 de 3"},
     {n:"Tríceps francês na corda",i:"frances",g:["triceps"],sets:3,r:"10-12",bi:"Trio · 3 de 3"}
   ]},
   D:{nome:"Inferior · posterior",min:"30-35",ex:[
     {n:"Stiff",i:"stiff",g:["post"],s:["gluteo"],sets:3,r:"8-10",o:"Coluna reta, barra rente à perna. Descanso de 90s"},
     {n:"Elevação pélvica",i:"pelvica",g:["gluteo"],s:["post"],sets:3,r:"8-10",o:"Barra ou máquina. Aperte o glúteo 1s lá em cima. Descanso de 90s"},
-    {n:"Flexor deitado",i:"flexora",g:["post"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com a abdutora"},
+    {n:"Cadeira flexora sentada",i:"flexora",g:["post"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com a abdutora",o:"Sentada cresce mais o posterior que deitada (a deitada já está no B)"},
     {n:"Cadeira abdutora",i:"abdutora",g:["gluteo"],sets:3,r:"10-12",bi:"Dupla 1 · alterne com o flexor"},
-    {n:"Panturrilha sentada",i:"pant",g:["pant"],sets:3,r:"10-12",bi:"Dupla 2 · alterne com o abdominal"},
+    {n:"Panturrilha sentada",i:"pant",g:["pant"],sets:3,r:"10-12",bi:"Dupla 2 · alterne com o abdominal",o:"Desça bem e segure 1s embaixo"},
     {n:"Abdominal remador",i:"abd",g:["abd"],sets:3,r:"12-15",bi:"Dupla 2 · alterne com a panturrilha"}
   ]}
 };
@@ -201,9 +202,9 @@ const YQ={
   "Puxada triângulo":"puxada triângulo pulley",
   "Remada curvada pronada":"remada curvada pronada barra",
   "Remada unilateral na máquina":"remada unilateral máquina articulada",
-  "Crucifixo inverso":"crucifixo inverso",
-  "Tríceps francês na corda":"tríceps francês na polia corda",
-  "Flexor deitado":"mesa flexora deitado",
+    "Tríceps francês na corda":"tríceps francês na polia corda",
+  "Cadeira flexora sentada":"cadeira flexora sentada",
+  "Elevação lateral no cabo":"elevação lateral na polia unilateral",
   "Abdominal remador":"abdominal remador",
   "Elevação pélvica":"elevação pélvica barra",
   "Rosca direta W":"rosca direta barra W"

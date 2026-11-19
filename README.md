@@ -60,5 +60,6 @@ Não há `.env`.
 4. No celular: abrir o link no Chrome/Safari e usar "Adicionar à tela inicial".
 
 ## Histórico de ajustes nas fichas
+- 19/11/2026, Claus (revisão leve): C troca crucifixo inverso por elevação lateral no cabo (ombro lateral só tinha 3 séries/semana; posterior de ombro já trabalha nas remadas e puxadas); D troca flexor deitado (repetia a mesa flexora do B) por cadeira flexora sentada; regra de progressão no topo.
 - 19/11/2026, Ana: pernas (A e C) refeitas — veja "Decisões".
 - 19/11/2026, Claus: supino reto e supino inclinado (A e C) na máquina; agachamento na máquina (B); serrote virou remada unilateral na máquina (C); afundo saiu e entrou elevação pélvica (D).

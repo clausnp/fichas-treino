@@ -256,7 +256,13 @@ const YQ={
   "Elevação pélvica":"elevação pélvica barra",
   "Rosca direta W":"rosca direta barra W"
 };
-const yt=n=>"https://www.youtube.com/results?search_query="+encodeURIComponent((YQ[n]||n)+" como fazer execução correta shorts");
+const ytWeb=n=>"https://www.youtube.com/results?search_query="+encodeURIComponent((YQ[n]||n)+" como fazer execução correta shorts");
+// Abre direto no app do YouTube e a ficha fica aberta por baixo: intent:// no Android, youtube:// no iPhone; no PC, aba nova
+const UA=navigator.userAgent,ANDROID=/Android/i.test(UA),IOS=/iPhone|iPad|iPod/i.test(UA)||(/Macintosh/.test(UA)&&navigator.maxTouchPoints>1);
+const yt=n=>{const w=ytWeb(n);
+  if(ANDROID)return "intent://"+w.slice(8)+"#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url="+encodeURIComponent(w)+";end";
+  if(IOS)return "youtube://"+w.slice(8);
+  return w};
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const chip=(k,sec)=>`<span class="chip${sec?" sec":""}" style="--c:var(${G[k][1]})">${G[k][0]}</span>`;
 
@@ -280,7 +286,7 @@ function renderDay(){
         ${e.o?`<div class="note">${esc(e.o)}</div>`:""}
         <div class="foot">
           <label class="carga">Carga <input type="text" inputmode="decimal" maxlength="12" placeholder="—" data-carga="${esc(e.n)}" value="${esc(cargas[e.n]||"")}"> kg</label>
-          <a class="yt" href="${yt(e.n)}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Ver no YouTube</a>
+          <a class="yt" href="${yt(e.n)}"${ANDROID||IOS?"":' target="_blank" rel="noopener"'}><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Ver no YouTube</a>
         </div>
       </div></article>`;
   });

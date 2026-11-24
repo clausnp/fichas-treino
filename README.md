@@ -16,7 +16,11 @@ Fichas de treino (Claus e Ana) para abrir no celular durante o treino. Páginas 
 - Tocar no número da série marca ela **e as anteriores** (tocar na última fecha o exercício todo); tocar numa marcada desmarca ela e as seguintes. "Concluir treino" grava o treino no histórico, limpa as marcações e avança a fila (A→B→C→D→A).
 - Marcações e próximo treino ficam no `localStorage` do navegador (chaves `ficha.*` no Claus, `ana.*` na Ana). Ficam só naquele celular/navegador.
 - Campo "Carga (kg)" em cada exercício: salva sozinho ao digitar (borda verde rápida confirma), no `localStorage` (`ficha.cargas` / `ana.cargas`), pelo **nome do exercício**. Não é apagado por "Limpar" nem "Concluir". Renomear um exercício perde a carga salva dele.
-- "Ver no YouTube": link comum (sem `target="_blank"` nem `window.open`) para uma busca no YouTube pelo exercício (`YQ` ajusta o termo de busca). Assim o celular passa direto para o app do YouTube; com nova aba ficava uma aba em branco aberta antes.
+- "Ver no YouTube": abre uma busca pelo exercício (`YQ` ajusta o termo) **direto no app do YouTube**, e a ficha continua aberta no navegador por baixo:
+  - Android: link `intent://...;package=com.google.android.youtube;S.browser_fallback_url=...` (sem o app instalado, cai na busca no site).
+  - iPhone/iPad: link `youtube://...` (exige o app instalado).
+  - PC: aba nova com o site.
+  - Antes era `window.open` em aba nova, que deixava uma aba em branco aberta antes do YouTube no celular.
 - **Histórico** (bloco no fim da ficha):
   - Ficha em uso: constante `FICHA` (`versao`, `inicio`, `trocaSem` = janela de troca em semanas, hoje 8 a 12). Mostra a semana atual, quantos treinos foram feitos nesta ficha e quando trocar; passou da 8ª semana, o aviso fica laranja.
   - Fichas anteriores: array `ANTERIORES` (`versao`, `inicio`, `fim`, `resumo`). A lista completa de exercícios de cada ficha antiga fica na seção "Histórico de fichas" deste README.
@@ -89,7 +93,7 @@ Não há `.env`.
   - **D · Superior · costas e abdômen**: Puxada triângulo 3×10-12; Supino máquina 3×10-12; Serrote 3×10-12; Crucifixo inverso 3×12-15; Tríceps francês na corda 3×10-12; Prancha 3×30-40s; Abdominal remador 3×12-15
 
 ## Histórico de ajustes nas fichas
-- 24/11/2026, app: botão do YouTube sem aba nova; tocar na última série marca todas; bloco "Histórico" (ficha em uso, troca prevista, fichas anteriores, treinos concluídos com cargas).
+- 24/11/2026, app: botão do YouTube abre direto o app (intent no Android, youtube:// no iPhone) e a ficha fica aberta; tocar na última série marca todas; bloco "Histórico" (ficha em uso, troca prevista, fichas anteriores, treinos concluídos com cargas).
 - 19/11/2026, Claus (revisão leve): C troca crucifixo inverso por elevação lateral no cabo (ombro lateral só tinha 3 séries/semana; posterior de ombro já trabalha nas remadas e puxadas); D troca flexor deitado (repetia a mesa flexora do B) por cadeira flexora sentada; regra de progressão no topo.
 - 19/11/2026, Ana: pernas (A e C) refeitas — veja "Decisões".
 - 19/11/2026, Claus: supino reto e supino inclinado (A e C) na máquina; agachamento na máquina (B); serrote virou remada unilateral na máquina (C); afundo saiu e entrou elevação pélvica (D).

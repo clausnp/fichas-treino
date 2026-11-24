@@ -92,6 +92,19 @@ h1{font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:.5px
 details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-top:14px;padding:0 14px}
 summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:.4px;padding-block:12px}
 details ul{margin:0 0 14px;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.hcard{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;margin-bottom:12px}
+.hcard div{color:var(--muted);font-size:13px;margin-top:3px}
+.hcard.alerta{border-color:var(--g-ombro)}.hcard.alerta div{color:var(--g-ombro);font-weight:600}
+#histbox h3{font-family:var(--display);font-size:16px;text-transform:uppercase;letter-spacing:.4px;margin:12px 0 4px}
+.hsub{font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.hant{margin:0 0 8px!important;font-size:13.5px!important}
+.hrow{border:0;border-top:1px solid var(--line);border-radius:0;margin:0;padding:0;font-size:14px}
+#histbox>div.hrow,.hrow summary{display:grid;grid-template-columns:78px 1fr auto;gap:8px;padding-block:8px;font:inherit;text-transform:none;letter-spacing:0}
+.hrow summary{list-style:none}.hrow summary::-webkit-details-marker{display:none}
+.hrow summary .ht::after{content:" ▾";color:var(--muted);font-size:11px}
+.hrow ul{margin:0 0 8px!important;font-size:13px!important;gap:2px!important}
+.hd{color:var(--muted);font-variant-numeric:tabular-nums}.hs{color:var(--muted);font-size:13px}
+#histbox{padding-bottom:12px}
 @media (prefers-reduced-motion:no-preference){.set,.tab{transition:background .15s,border-color .15s}}
 </style>
 </head>
@@ -116,6 +129,10 @@ details ul{margin:0 0 14px;padding-left:18px;display:flex;flex-direction:column;
       <li><b>Semana leve:</b> a cada 6 a 8 semanas, metade das séries com a mesma carga.</li>
       <li><b>Dieta:</b> mantenha o peso alto; se precisar cortar, corte séries. Proteína 1,6 a 2,2 g/kg. Caminhada inclinada 20 a 30 min.</li>
     </ul>
+  </details>
+  <details>
+    <summary>Histórico</summary>
+    <div id="histbox"></div>
   </details>
 </div>
 
@@ -188,13 +205,43 @@ const T={
     {n:"Abdominal remador",i:"abd",g:["abd"],sets:3,r:"12-15",bi:"Dupla 2 · alterne com a panturrilha"}
   ]}
 };
+// Ficha em uso. Ao trocar: mover esta para ANTERIORES (com fim e resumo), subir a versao e mudar o inicio. Detalhes no README.
+const FICHA={versao:1,inicio:"2026-11-19",trocaSem:[8,12]};
+const ANTERIORES=[];
 const ORD=["A","B","C","D"];
+const hoje=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const dt=iso=>{const[a,m,d]=iso.split("-");return d+"/"+m+"/"+a};
+const somaDias=(iso,n)=>{const d=new Date(iso+"T12:00");d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)};
+const DS=["dom","seg","ter","qua","qui","sex","sáb"];
+function renderHist(){
+  const sem=Math.floor((new Date(hoje()+"T12:00")-new Date(FICHA.inicio+"T12:00"))/864e5/7)+1;
+  const de=somaDias(FICHA.inicio,7*FICHA.trocaSem[0]),ate=somaDias(FICHA.inicio,7*FICHA.trocaSem[1]);
+  const hora=hoje()>=de;
+  const desta=historico.filter(h=>h.f===FICHA.versao).length;
+  const mes=hoje().slice(0,7),noMes=historico.filter(h=>h.d.startsWith(mes)).length;
+  const lista=historico.slice(-40).reverse().map(h=>{
+    const c=Object.entries(h.c||{});
+    const dia=DS[new Date(h.d+"T12:00").getDay()];
+    const linha=`<span class="hd">${dia} ${dt(h.d).slice(0,5)}</span><span class="ht">Treino ${h.t}</span><span class="hs">${h.s}/${h.tot} séries</span>`;
+    return c.length?`<details class="hrow"><summary>${linha}</summary><ul>${c.map(([n,v])=>`<li>${esc(n)}: <b>${esc(v)} kg</b></li>`).join("")}</ul></details>`:`<div class="hrow">${linha}</div>`;
+  }).join("");
+  document.getElementById("histbox").innerHTML=`
+    <div class="hcard${hora?" alerta":""}">
+      <b>Ficha ${FICHA.versao}</b> · desde ${dt(FICHA.inicio)} · semana ${sem} · ${desta} treino${desta===1?"":"s"} feito${desta===1?"":"s"}
+      <div>${hora?"Hora de trocar a ficha (já passou de "+FICHA.trocaSem[0]+" semanas).":"Trocar a ficha entre "+dt(de)+" e "+dt(ate)+" ("+FICHA.trocaSem[0]+" a "+FICHA.trocaSem[1]+" semanas)."}</div>
+    </div>
+    ${ANTERIORES.length?`<h3>Fichas anteriores</h3><ul class="hant">${ANTERIORES.map(a=>`<li><b>Ficha ${a.versao}</b> · ${dt(a.inicio)} a ${dt(a.fim)}<br>${esc(a.resumo)}</li>`).join("")}</ul>`:""}
+    <h3>Treinos concluídos</h3>
+    <div class="hsub">${historico.length} no total · ${noMes} neste mês · salvo só neste celular</div>
+    ${lista||'<div class="hsub">Nenhum ainda. Aparece aqui cada vez que tocar em "Concluir treino".</div>'}`;
+}
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
   set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 let proximo=store.get("ficha.proximo","A");
 let atual=proximo;
 let marcas=store.get("ficha.marcas",{});
 let cargas=store.get("ficha.cargas",{});
+let historico=store.get("ficha.historico",[]);
 const YQ={
   "Crossover / crucifixo no cabo":"crossover na polia",
   "Glúteo no cabo (coice)":"coice glúteo no cabo",
@@ -233,7 +280,7 @@ function renderDay(){
         ${e.o?`<div class="note">${esc(e.o)}</div>`:""}
         <div class="foot">
           <label class="carga">Carga <input type="text" inputmode="decimal" maxlength="12" placeholder="—" data-carga="${esc(e.n)}" value="${esc(cargas[e.n]||"")}"> kg</label>
-          <a class="yt" href="${yt(e.n)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Ver no YouTube</a>
+          <a class="yt" href="${yt(e.n)}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Ver no YouTube</a>
         </div>
       </div></article>`;
   });
@@ -259,7 +306,8 @@ function renderDay(){
     <div class="actions"><button class="btn" id="limpar">Limpar marcações</button><button class="btn primary" id="concluir">Concluir treino ${atual}</button></div>
     <div class="toast" id="toast"></div>`;
 }
-function render(){renderTabs();renderDay()}
+const t0=()=>T[atual];
+function render(){renderTabs();renderDay();renderHist()}
 let salvoTimer;
 document.addEventListener("input",ev=>{
   const inp=ev.target.closest("[data-carga]");if(!inp)return;
@@ -268,17 +316,21 @@ document.addEventListener("input",ev=>{
   inp.classList.add("salvo");clearTimeout(salvoTimer);salvoTimer=setTimeout(()=>inp.classList.remove("salvo"),900);
 });
 document.addEventListener("click",ev=>{
-  const ytLink=ev.target.closest(".yt");
-  if(ytLink){ev.preventDefault();if(!window.open(ytLink.href,"_blank"))location.href=ytLink.href;return}
   const tab=ev.target.closest(".tab");
   if(tab){atual=tab.dataset.k;render();window.scrollTo({top:0});return}
   const set=ev.target.closest(".set");
   if(set){const e=+set.dataset.e,s=+set.dataset.s;
     marcas[atual]=marcas[atual]||{};const arr=marcas[atual][e]=marcas[atual][e]||[];
-    arr[s]=!arr[s];store.set("ficha.marcas",marcas);renderDay();return}
+    // Marcar uma série marca as anteriores; desmarcar desmarca as seguintes (tocar na última fecha o exercício)
+    const ligar=!arr[s];for(let i=0;i<t0().ex[e].sets;i++)if(ligar?i<=s:i>=s)arr[i]=ligar;
+    store.set("ficha.marcas",marcas);renderDay();return}
   if(ev.target.id==="limpar"){delete marcas[atual];store.set("ficha.marcas",marcas);renderDay();return}
   if(ev.target.id==="concluir"){
-    const feito=atual;delete marcas[feito];store.set("ficha.marcas",marcas);
+    const feito=atual,m=marcas[feito]||{},ex=T[feito].ex;
+    historico.push({d:hoje(),t:feito,f:FICHA.versao,s:ex.reduce((n,_,i)=>n+(m[i]||[]).filter(Boolean).length,0),
+      tot:ex.reduce((n,e)=>n+e.sets,0),c:Object.fromEntries(ex.filter(e=>cargas[e.n]).map(e=>[e.n,cargas[e.n]]))});
+    store.set("ficha.historico",historico);
+    delete marcas[feito];store.set("ficha.marcas",marcas);
     proximo=ORD[(ORD.indexOf(feito)+1)%4];store.set("ficha.proximo",proximo);
     atual=proximo;render();window.scrollTo({top:0});
     document.getElementById("toast").textContent=`Treino ${feito} concluído. Próximo: ${proximo}.`;
